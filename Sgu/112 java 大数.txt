@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.Scanner;
+import java.math.*;
+
+public class HelloWorld {
+
+	public static void main(String[] args) {
+		Scanner cin = new Scanner(System.in);
+		int aa, bb;
+		BigInteger a, b, sum, ans;
+		ans = BigInteger.ONE;
+		sum = BigInteger.ONE;
+		a = cin.nextBigInteger();
+		b = cin.nextBigInteger();
+		aa = a.intValue(); bb=b.intValue();
+		for(int i = 1; i <= bb; i++) ans = ans.multiply(a);
+		for(int i = 1; i <= aa; i++) sum = sum.multiply(b);
+		System.out.println(ans.subtract(sum));
+	}
+
+}

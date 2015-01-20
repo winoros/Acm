@@ -1,0 +1,2 @@
+	141 exEuclid find a solution the abs value of which is smaller than x and is
+same parity.
