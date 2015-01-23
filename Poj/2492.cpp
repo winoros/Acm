@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  1703.cpp
+ *       Filename:  2492.cpp
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  2015/1/23 11:24:33
+ *        Created:  2015/1/23 15:30:36
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -37,7 +37,7 @@
 
 using namespace std;
 
-int p[100010<<1];
+int p[2010<<1];
 
 int find(int x) {
 	return p[x] == x ? x : p[x] = find(p[x]);
@@ -58,28 +58,30 @@ void MAIN() {
 	int n, m;
 	scanf("%d%d", &n, &m);
 	init(n);
+	bool need_judge = true;
 	while(m--) {
-		char str[3];
 		int a, b;
-		scanf("%s%d%d", str, &a, &b);
-		if(str[0] == 'A') {
-			int pa = find(a), pb = find(b), ppb = find(b+n);
-			if(pa == pb)
-				puts("In the same gang.");
-			else if(pa == ppb)
-				puts("In different gangs.");
-			else
-				puts("Not sure yet.");
-		} else {
+		scanf("%d%d", &a, &b);
+		if(need_judge) {
+			int pa = find(a), pb = find(b);
+			if(pa == pb) {
+				puts("Suspicious bugs found!\n");
+				need_judge = false;
+			}
 			merge(a, b+n), merge(a+n, b);
 		}
 	}
+	if(need_judge)
+		puts("No suspicious bugs found!\n");
 }
 
 int main() {
 	int n;
 	scanf("%d", &n);
-	while(n--)
+	for(int i = 1; i <= n; ++i) {
+		printf("Scenario #%d:\n", i);
 		MAIN();
+	}
 	return 0;
 }
+
