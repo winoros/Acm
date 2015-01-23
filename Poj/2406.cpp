@@ -1,12 +1,12 @@
 /*
  * =====================================================================================
  *
- *       Filename:  1703.cpp
+ *       Filename:  2406.cpp
  *
  *    Description:  
  *
  *        Version:  1.0
- *        Created:  2015/1/23 11:24:33
+ *        Created:  2015/1/23 14:58:26
  *       Revision:  none
  *       Compiler:  gcc
  *
@@ -37,50 +37,32 @@
 
 using namespace std;
 
-int p[2010<<1];
+int next[1000010];
+char str[1000010];
 
-int find(int x) {
-	return p[x] == x ? x : p[x] = find(p[x]);
-}
-
-void merge(int x, int y) {
-	int px = find(x), py = find(y);
-	p[px] = py;
-}
-
-void init(int n) {
-	n<<=1;
-	for(int i = 1; i <= n; ++i)
-		p[i] = i;
+void make_kmp(int len) {
+	next[0] = -1;
+	int i = 0, j = -1;
+	while(i < len) {
+		if(j == -1 || str[i] == str[j]) {
+			++i, ++j;
+			next[i] = j;
+		} else
+			j = next[j];
+	}
 }
 
 void MAIN() {
-	int n, m;
-	scanf("%d%d", &n, &m);
-	init(n);
-	bool need_judge = true;
-	while(m--) {
-		int a, b;
-		scanf("%d%d", &a, &b);
-		if(need_judge) {
-			int pa = find(a), pb = find(b);
-			if(pa == pb) {
-				puts("Suspicious bugs found!\n");
-				need_judge = false;
-			}
-			merge(a, b+n), merge(a+n, b);
-		}
-	}
-	if(need_judge)
-		puts("No suspicious bugs found!\n");
+	int len = strlen(str);
+	make_kmp(len);
+	if(len % (len - next[len]) == 0)
+		printf("%d\n", len / (len - next[len]));
+	else
+		puts("1");
 }
 
 int main() {
-	int n;
-	scanf("%d", &n);
-	for(int i = 1; i <= n; ++i) {
-		printf("Scenario #%d:\n", i);
+	while(scanf("%s", str) && strcmp(str, ".") != 0)
 		MAIN();
-	}
 	return 0;
 }
