@@ -60,7 +60,7 @@ long long dfs(int now, int fa) {
 	return cnt;
 }
 
-void MAIN(int n, int m) {
+void MAIN(int n) {
 	for(int i = 0; i < n; ++i)
 		scanf("%d", &val[i]);
 	s_tot = accumulate(val, val+n, 0LL);
@@ -78,10 +78,10 @@ void MAIN(int n, int m) {
 }
 
 int main() {
-	int cnt = 0, n, m;
-	while(scanf("%d%d", &n, &m) && n) {
+	int cnt = 0, n;
+	while(scanf("%d%*d", &n) && n) {
 		printf("Case %d: ", ++cnt);
-		MAIN(n, m);
+		MAIN(n);
 	}
 	return 0;
 }
