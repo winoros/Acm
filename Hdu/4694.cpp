@@ -76,16 +76,10 @@ int eval(int now) {
 void lengauer_tarjan(int n) {
 	memset(dfn, -1, sizeof dfn);
 	memset(fa, -1, sizeof fa);
-//	memset(anc, 0, sizeof anc);
-//	memset(idom, 0, sizeof idom);
-//	for(int i = 0; i <= n; ++i)
-//		best[i] = semi[i] = i;
 	timestamp = 0;
 	dfs(n);
 	fa[1] = 0;
 	for(int w = timestamp; w > 1; --w) {
-		if(fa[w] == -1)
-			continue;
 		int sz = prod[w].size();
 		for(int i = 0; i < sz; ++i) {
 			int u = eval(prod[w][i]);
@@ -106,9 +100,7 @@ void lengauer_tarjan(int n) {
 		}
 		bucket[fa[w]].clear();
 	}
-	for(int w = 2; w <= n; ++w) {
-		if(fa[w] == -1)
-			continue;
+	for(int w = 2; w <= timestamp; ++w) {
 		if(idom[w] != semi[w])
 			idom[w] = idom[idom[w]];
 	}
