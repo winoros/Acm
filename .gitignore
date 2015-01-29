@@ -48,3 +48,6 @@ Temporary Items
 *.swp
 *.swo
 *.txt
+*.iml
+Sgu/284/.idea/*
+Sgu/284/out/*
