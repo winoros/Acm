@@ -37,15 +37,28 @@
 
 using namespace std;
 
+template<class T>
+inline bool read(T &n) {
+    T x = 0, tmp = 1;
+    char c = getchar();
+    while((c < '0' || c > '9') && c != '-' && c != EOF) c = getchar();
+    if(c == EOF) return false;
+    if(c == '-') c = getchar(), tmp = -1;
+    while(c >= '0' && c <= '9') x *= 10, x += (c - '0'),c = getchar();
+    n = x*tmp;
+    return true;
+}
+
 vector<int> succ[50010], prod[50010], bucket[50010], dom_t[50010];
 int semi[50010], anc[50010], idom[50010], best[50010], fa[50010];
 int dfn[50010], redfn[50010];
 int timestamp;
+int size[50010], child[50010];
 
 void dfs(int now) {
 	dfn[now] = ++timestamp;
 	redfn[timestamp] = now;
-	anc[timestamp] = idom[timestamp] = 0;
+	anc[timestamp] = idom[timestamp] = size[timestamp] = child[timestamp] = 0;
 	semi[timestamp] = best[timestamp] = timestamp;
 	int sz = succ[now].size();
 	for(int i = 0; i < sz; ++i) {
@@ -66,16 +79,41 @@ void compress(int now) {
 	}
 }
 
-int eval(int now) {
+inline int eval(int now) {
 	if(anc[now] == 0)
 		return now;
-	compress(now);
-	return best[now];
+	else {
+		compress(now);
+		return semi[best[anc[now]]] >= semi[best[now]] ? best[now]
+			: best[anc[now]];
+	}
+}
+
+inline void link(int v, int w) {
+	int s = w;
+	while(semi[best[w]] < semi[best[child[w]]]) {
+		if(size[s] + size[child[child[s]]] >= 2*size[child[s]]) {
+			anc[child[s]] = s;
+			child[s] = child[child[s]];
+		} else {
+			size[child[s]] = size[s];
+			s = anc[s] = child[s];
+		}
+	}
+	best[s] = best[w];
+	size[v] += size[w];
+	if(size[v] < 2*size[w])
+		swap(s, child[v]);
+	while(s != 0) {
+		anc[s] = v;
+		s = child[s];
+	}
 }
 
 void lengauer_tarjan(int n) {
 	memset(dfn, -1, sizeof dfn);
 	memset(fa, -1, sizeof fa);
+	size[0] = best[0] = semi[0] = 0;
 	timestamp = 0;
 	dfs(n);
 	fa[1] = 0;
@@ -87,7 +125,7 @@ void lengauer_tarjan(int n) {
 				semi[w] = semi[u];
 		}
 		bucket[semi[w]].push_back(w);
-		anc[w] = fa[w];
+		link(fa[w], w);
 		if(fa[w] == 0)
 			continue;
 		sz = bucket[fa[w]].size();
@@ -127,7 +165,7 @@ void MAIN(int n, int m) {
 	for(int i = 0; i <= n; ++i)
 		succ[i].clear(), prod[i].clear(), bucket[i].clear(), dom_t[i].clear();
 	for(int i = 0, u, v; i < m; ++i) {
-		scanf("%d%d", &u, &v);
+		read(u), read(v);
 		succ[u].push_back(v);
 	}
 	lengauer_tarjan(n);
@@ -139,7 +177,7 @@ void MAIN(int n, int m) {
 
 int main() {
 	int n, m;
-	while(scanf("%d%d", &n, &m) > 0)
+	while(read(n) && read(m))
 		MAIN(n, m);
 	return 0;
 }
