@@ -84,7 +84,7 @@ void MAIN() {
 		add(i+1, i, 0);
 	}
 	spfa(maxx);
-	printf("%d\n", dis[0]);
+	printf("%d\n", -dis[0]);
 }
 
 int main() {
