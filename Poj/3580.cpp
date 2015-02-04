@@ -187,6 +187,7 @@ void MAIN() {
 			splay(succ, pred);
 			succ->ch[0] = null;
 			succ->upd();
+			pred->upd();
 		} else {
 			scanf("%d", &y);
 			if(str[0] == 'I') {
@@ -196,6 +197,7 @@ void MAIN() {
 				splay(succ, pred);
 				succ->setc(make(y), 0);
 				succ->upd();
+				pred->upd();
 			} else if(str[0] == 'M') {
 				node *now = get(x, y+1);
 				printf("%d\n", now->minn);
