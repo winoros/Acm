@@ -192,10 +192,10 @@ void MAIN() {
 			if(str[0] == 'I') {
 				node *pred = find(x);
 				node *succ = find(x+1);
-				splay(succ);
-				splay(pred, succ);
-				pred->setc(make(y), 1);
-				pred->upd();
+				splay(pred);
+				splay(succ, pred);
+				succ->setc(make(y), 0);
+				succ->upd();
 			} else if(str[0] == 'M') {
 				node *now = get(x, y+1);
 				printf("%d\n", now->minn);
@@ -223,8 +223,8 @@ void MAIN() {
 				}
 			}
 		}
-		inorder(root);
-		puts("");
+		//inorder(root);
+		//puts("");
 	}
 }
 
