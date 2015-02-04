@@ -50,9 +50,10 @@ void node::relax() {
 	}
 }
 
-node *root, mem[200010], *tot;
+node *root, mem[130010], *tot;
 
 node *make(int val) {
+	tot->p = null;
 	tot->val = val;
 	tot->ch[0] = tot->ch[1] = null;
 	tot->size = 1;
@@ -121,7 +122,7 @@ node *get(int l, int r) {
 	return _r->ch[0];
 }
 
-int ans[200010], anslen;
+int ans[130010], anslen;
 
 void inorder(node *now) {
 	if(now == null)
@@ -137,7 +138,6 @@ void MAIN() {
 	scanf("%d%d", &n, &m);
 	tot = mem;
 	root = build(0, n+1);
-	root->p = null;
 	for(int i = 0, l, r; i < m; ++i) {
 		scanf("%d%d", &l, &r);
 		node *now = get(l, r+1);
