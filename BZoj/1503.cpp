@@ -106,18 +106,6 @@ node *upper_bound(int val) {
 	}
 }
 
-node *getPred(node *now) {
-	splay(now);
-	if(now->ch[0] == null)
-		return null;
-	else {
-		now = now->ch[0];
-		while(now->ch[1] != null)
-			now = now->ch[1];
-		return now;
-	}
-}
-
 node *make(int val) {
 	tot->val = val;
 	tot->cnt = tot->size = 1;
@@ -133,6 +121,7 @@ void insert(int val) {
 		if(now->val == val) {
 			++now->cnt;
 			++now->size;
+			splay(now);
 			return ;
 		} else if(now->val > val) {
 			if(now->ch[0] == null) {
@@ -150,39 +139,6 @@ void insert(int val) {
 				now = now->ch[1];
 		}
 	}
-}
-
-void inorder(node *now) {
-	if(now == null)
-		return ;
-	now->relax();
-	inorder(now->ch[0]);
-	printf("%d__%d__%d\n", now->val, now->cnt, now->size);
-	inorder(now->ch[1]);
-}
-
-void preorder(node *now) {
-	if(now == null)
-		return ;
-	now->relax();
-	printf("now %d__%d__%d ", now->val, now->cnt, now->size);
-	printf("lson ");
-	if(now->ch[0] != null)
-		printf("%d__%d__%d ", now->ch[0]->val, now->ch[0]->cnt, now->ch[0]->size);
-	else
-		puts("null");
-	printf("rson ");
-	if(now->ch[1] != null)
-		printf("%d__%d__%d\n", now->ch[1]->val, now->ch[1]->cnt, now->ch[1]->size);
-	else
-		puts("null");
-	preorder(now->ch[0]);
-	preorder(now->ch[1]);
-}
-
-void inorder() {
-	inorder(root);
-	puts("");
 }
 
 void MAIN() {
@@ -203,18 +159,14 @@ void MAIN() {
 				continue;
 			else
 				insert(x);
-			inorder();
 		} else if(str[0] == 'A') {
 			root->add(x);
 		} else if(str[0] == 'S') {
 			root->add(-x);
-			//inorder();
 			node *now = upper_bound(minn-1);
 			splay(now);
 			final_ans += now->ch[0]->size;
 			now->setc(null, 0);
-			//preorder(root);
-			inorder();
 		} else {
 			x = root->size - x;
 			if(x <= 0)
