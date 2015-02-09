@@ -9,6 +9,7 @@ struct node {
     bool d() {
         return p->ch[1] == this;
     }
+	//remember upd after setc
     void setc(node *c, int d) {
         c->p = this;
         ch[d] = c;
