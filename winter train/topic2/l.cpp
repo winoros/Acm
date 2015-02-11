@@ -58,7 +58,7 @@ void MAIN(int n, int m) {
 			if(pa != pb)
 				puts("UNKNOWN");
 			else
-				printf("%I64d\n", dis[a] - dis[b]);
+				printf("%lld\n", dis[a] - dis[b]);
 		}
 	}
 }
