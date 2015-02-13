@@ -70,7 +70,7 @@ void init() {
 long long dfs(node *now) {
 	if(now == null)
 		return 1;
-	return dfs(now->ch[0]) * dfs(now->ch[1]) %mod * c[now->size-1][now->ch[0]->size];
+	return dfs(now->ch[0]) * dfs(now->ch[1]) %mod * c[now->size-1][now->ch[0]->size] %mod;
 }
 
 void inorder(node *now) {
@@ -96,8 +96,7 @@ void MAIN() {
 		else
 			insert(root, tmp);
 	}
-	inorder();
-	printf("%I64d\n", dfs(root) * c[m][n]);
+	printf("%lld\n", dfs(root) * c[m][n] %mod);
 }
 
 int main() {
