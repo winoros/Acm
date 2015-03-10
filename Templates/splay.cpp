@@ -130,6 +130,7 @@ void insert(int pos, int val) { //insert a new element after posth element
 	splay(pred, succ);
 	pred->setc(make(val), 1);
 	pred->upd();
+	succ->upd();
 }
 
 void del(int pos) { //delete posth element
@@ -139,4 +140,5 @@ void del(int pos) { //delete posth element
 	splay(succ, pred);
 	succ->ch[0] = null;
 	succ->upd();
+	pred->upd();
 }
