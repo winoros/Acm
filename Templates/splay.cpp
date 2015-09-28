@@ -52,18 +52,18 @@ void node::relax() {
 node *root, mem[max_node], *tot;
 
 void rot(node *now) {
-    node *p = now->p;
-    p->relax();
-    now->relax();
-    int d = now->d();
-    p->setc(now->ch[!d], d);
-    now->p = p->p;
-    if(now->p != null)
-        p->p->setc(now, p->d());
-    now->setc(p, !d);
-    p->upd();
-    if(now->p == null)
-        root = now;
+	node *p = now->p;
+	p->relax();
+	now->relax();
+	int d = now->d();
+	p->setc(now->ch[!d], d);
+	now->p = p->p;
+	if(now->p != null)
+		p->p->setc(now, p->d());
+	now->setc(p, !d);
+	p->upd();
+	if(now->p == null)
+		root = now;
 }
 
 void splay(node *now, node *goal = null) {
@@ -109,7 +109,7 @@ node *make(int val) { // add a new node into the tree
 	tot->reverse = false;
 	tot->ch[0] = tot->ch[1] = null;
 	tot->size = 1;
-	return ++tot;
+	return tot ++;
 }
 
 node *build(int l, int r) {
@@ -118,7 +118,7 @@ node *build(int l, int r) {
 	int m = (l+r)>>1;
 	node *now = make(value(m)); //edit the value(m) according to the specific problem
 	now->setc(build(l, m-1), 0);
-	now->setc(build(m+1, r), 0);
+	now->setc(build(m+1, r), 1);
 	now->upd();
 	return now;
 }
